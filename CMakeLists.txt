@@ -14,28 +14,31 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic -Werror -Wno-error=attributes -Wno-attributes -Wno-error=unused-function -Wno-unused-function)
 endif()
 
+
 add_library(cudnn_frontend INTERFACE)
-target_include_directories(cudnn_frontend INTERFACE
-    "${D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/include}"
-)
 
 target_compile_definitions(
     cudnn_frontend INTERFACE
     $<$<BOOL:${CUDNN_FRONTEND_SKIP_JSON_LIB}>:CUDNN_FRONTEND_SKIP_JSON_LIB>
 )
 
-target_include_directories(
-    cudnn_frontend INTERFACE
+set(DLFNC_INCLUDE_DIR "D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/include")
+set(DLFNC_LIBRARY "D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/lib/dl.lib")
+
+target_include_directories(cudnn_frontend INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    ${DLFNC_INCLUDE_DIR}
 )
+
+message(STATUS "Including headers from: ${DLFNC_INCLUDE_DIR}")
+message(STATUS "Linking to library: ${DLFNC_LIBRARY}")
 
 # Find the cuda compiler
 find_package(CUDAToolkit)
 
-target_link_libraries(
-    cudnn_frontend INTERFACE
-    "${D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/lib/dl.lib}"
+target_link_libraries(cudnn_frontend INTERFACE
+    ${DLFNC_LIBRARY}
     CUDA::cudart
     CUDA::nvrtc
 )
