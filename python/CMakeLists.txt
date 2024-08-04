@@ -57,6 +57,8 @@ target_include_directories(
 
 # target_compile_definitions(_compiled_module PRIVATE NV_CUDNN_FRONTEND_USE_DYNAMIC_LOADING)
 
+target_compile_definitions(_compiled_module PRIVATE NOMINMAX)
+
 target_link_libraries(
     _compiled_module
     

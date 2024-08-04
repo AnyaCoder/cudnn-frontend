@@ -91,7 +91,7 @@ class PointWiseDesc_v8 : public BackendDescriptor {
     DataType_t compute_type               = DataType_t::FLOAT;
     PointwiseMode_t mode                  = PointwiseMode_t::NOT_SET;
     cudnnNanPropagation_t nan_propagation = CUDNN_PROPAGATE_NAN;
-    double upper_clip                     = 1.7976931348623157e+308;
+    double upper_clip                     = std::numeric_limits<double>::max();
     double lower_clip                     = 0.0;
     double lower_clip_slope               = 0.0;
     double elu_alpha                      = 1.0;
