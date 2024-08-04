@@ -55,17 +55,24 @@ else()
 
 endif()
 
+
+set(DLFNC_INCLUDE_DIR "D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/include")
+set(DLFNC_LIBRARY "D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/lib/dl.lib")
+
+
 target_include_directories(
     CUDNN::cudnn_all
     INTERFACE
     $<INSTALL_INTERFACE:include>
     $<BUILD_INTERFACE:${CUDNN_INCLUDE_DIR}>
+    ${DLFNC_INCLUDE_DIR}
 )
 
 target_link_libraries(
     CUDNN::cudnn_all
     INTERFACE
-    CUDNN::cudnn 
+    CUDNN::cudnn
+    ${DLFNC_LIBRARY}
 )
 
 if(CUDNN_MAJOR_VERSION EQUAL 8)
