@@ -15,6 +15,9 @@ else()
 endif()
 
 add_library(cudnn_frontend INTERFACE)
+target_include_directories(cudnn_frontend INTERFACE
+    "${D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/include}"
+)
 
 target_compile_definitions(
     cudnn_frontend INTERFACE
@@ -32,7 +35,7 @@ find_package(CUDAToolkit)
 
 target_link_libraries(
     cudnn_frontend INTERFACE
-
+    "${D:/a/TransformerEngine/TransformerEngine/dlfcn-win32/release/lib/dl.lib}"
     CUDA::cudart
     CUDA::nvrtc
 )
